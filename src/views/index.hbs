@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <title>weather</title>
+</head>
+<body>
+  <div class="">
+    {{>header}}
+  </div>
+  <main class="ml-6 relative flex justify-center flex-col text-center">
+    <h1 class="text-xl mb-4 tracking-wide text-yellow-200">Search Location</h1>
+    <form action="">
+      <input class="rounded-2xl w-72 h-6 outline-none active:outline-none " type="text" placeholder="   Search">
+      <button class="border border-yellow-400 rounded px-4 hover:bg-yellow-400 hover:text-gray-800">Search</button>
+    </form>
+  <p id="message-1" class="mt-4"></p>
+  <p id="message-3" class="text-yellow-200 text-2xl"></p>
+  <p id="message-2" class="text-xl text-yellow-300 animate-pulse"></p>
+  </main>
+  {{>footer}}
+  <script>
+   
+
+const formData = document.querySelector('form')
+const searchQuery = document.querySelector('input')
+const messageOne = document.querySelector('#message-1')
+const messageTwo = document.querySelector('#message-2')
+const messageThree = document.querySelector('#message-3')
+  messageOne.textContent = ''
+  messageTwo.textContent = ''
+  messageThree.textContent= ''
+formData.addEventListener('submit',(e)=>{
+  e.preventDefault();
+ const userInput = searchQuery.value
+  fetch(`http://localhost:3000/weather?address=${userInput}`).then((response)=>{
+  response.json().then((data)=>{
+    if (data.error) {
+      messageOne.textContent = data.error 
+    }
+    else {
+      messageOne.textContent=data.location
+      messageThree.textContent= 'Temperature'
+      messageTwo.textContent= data.forcast.temperature
+    }
+  })
+})
+})
+  </script>
+</body>
+  
+</html>
