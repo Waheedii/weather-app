@@ -4,6 +4,7 @@ const path = require('path')
 const hbs = require('hbs')
 const geocode = require('./utils/geolocation')
 const forcast = require('./utils/forcast')
+const port = process.env.PORT || 3000
 
 const app = express()
 app.set('view engine','hbs')
@@ -74,5 +75,5 @@ app.get("*",(req,res) =>{
   res.render('error')
 })
 
-app.listen(3000)
+app.listen(port)
  
